@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MindForge - Bilişsel Jimnastik (15 Oyunlu Tam Havuz)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Üst Başlık & Durum Çubuğu -->
+    <header class="top-nav">
+      <div class="brand">
+        <span class="logo-icon">🧠</span>
+        <div class="brand-text">
+          <h1>MindForge</h1>
+          <span class="brand-badge">15 Modüllü Bilişsel Spor Salonu</span>
+        </div>
+      </div>
+      
+      <div class="user-quick-stats">
+        <div class="stat-pill" title="Kazanılan kalıcı tecrübe puanı">
+          <span class="pill-icon">✨</span>
+          <span class="pill-label">XP:</span>
+          <strong id="header-xp">0</strong>
+        </div>
+        <div class="stat-pill" title="Mevcut Bilişsel Seviye">
+          <span class="pill-icon">⭐</span>
+          <span class="pill-label">Sv:</span>
+          <strong id="header-level">1</strong>
+        </div>
+        <div class="stat-pill streak-pill" title="Günlük seri (Asla ceza kesilmez!)">
+          <span class="pill-icon">🔥</span>
+          <strong id="header-streak">1 Gün</strong>
+        </div>
+        <button id="sound-toggle" class="icon-button" title="Ses Açık/Kapalı" aria-label="Ses">
+          🔊
+        </button>
+      </div>
+    </header>
+
+    <!-- Ana Konteyner -->
+    <main class="main-content">
+      
+      <!-- GÖRÜNÜM 1: DASHBOARD (ANA MENÜ) -->
+      <section id="view-dashboard" class="view active">
+        <!-- Bilgilendirme / Hoş Geldin Rozeti -->
+        <div class="hero-banner">
+          <div class="banner-content">
+            <div class="zen-quote">
+              <span class="tag">💡 15 OYUNLU TAM HAVUZ AKTİF</span>
+              <h2>Zihninizin Tüm Bilişsel Alanlarını Çalıştırın</h2>
+              <p>5 ana alanda 15 mini oyun! Sıfır kilit, günlük kota yok, kişisel veri zorunluluğu yok.</p>
+            </div>
+            <div class="streak-freeze-badge" title="Kaçırılan günlerde seriyi korur">
+              <span class="badge-icon">🛡️</span>
+              <div>
+                <strong>2 Mola Hakkı (Streak Freeze)</strong>
+                <small>Seriniz asla ceza olarak silinmez</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Bilişsel Sütun İlerleme Göstergeleri -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-icon">🧩</span>
+            <div class="metric-info">
+              <span class="metric-name">Bellek (Memory)</span>
+              <strong id="stat-memory-lvl">Sv. 1 (Acemi)</strong>
+              <div class="progress-bar"><div class="fill" id="fill-memory" style="width: 10%"></div></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">🎯</span>
+            <div class="metric-info">
+              <span class="metric-name">Odak & Esneklik</span>
+              <strong id="stat-focus-lvl">Sv. 1 (Acemi)</strong>
+              <div class="progress-bar"><div class="fill" id="fill-focus" style="width: 10%"></div></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">⚡</span>
+            <div class="metric-info">
+              <span class="metric-name">Hız & Tepki</span>
+              <strong id="stat-speed-lvl">Sv. 1 (Acemi)</strong>
+              <div class="progress-bar"><div class="fill" id="fill-speed" style="width: 10%"></div></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">📐</span>
+            <div class="metric-info">
+              <span class="metric-name">Problem Çözme & Mantık</span>
+              <strong id="stat-logic-lvl">Sv. 1 (Acemi)</strong>
+              <div class="progress-bar"><div class="fill" id="fill-logic" style="width: 10%"></div></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">📖</span>
+            <div class="metric-info">
+              <span class="metric-name">Dil & Algısal Hız</span>
+              <strong id="stat-lang-lvl">Sv. 1 (Acemi)</strong>
+              <div class="progress-bar"><div class="fill" id="fill-lang" style="width: 10%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategori Filtreleme Çubuğu -->
+        <div class="category-filter-bar">
+          <button class="filter-tab active" data-filter="all">Tümü (15 Oyun)</button>
+          <button class="filter-tab" data-filter="memory">🧩 Bellek (4)</button>
+          <button class="filter-tab" data-filter="focus">🎯 Odak & Esneklik (4)</button>
+          <button class="filter-tab" data-filter="speed">⚡ Hız & Tepki (3)</button>
+          <button class="filter-tab" data-filter="logic">📐 Mantık & Matematik (3)</button>
+          <button class="filter-tab" data-filter="language">📖 Dil & Algı (1)</button>
+        </div>
+
+        <!-- 15 Oyunluk Dinamik Kart Izgarası -->
+        <div class="games-grid" id="games-grid-container">
+          <!-- games-registry.js tarafından dinamik render edilir -->
+        </div>
+
+        <!-- Veri ve Yerel Yönetim -->
+        <div class="local-data-tray">
+          <div class="data-text">
+            <span>💾 <strong>Local-First Güvencesi:</strong> İlerlemeniz tarayıcınızın belleğindedir. İstediğiniz an yedekleyin.</span>
+          </div>
+          <div class="data-actions">
+            <button class="btn-text" onclick="MindForge.exportData()">Yedeği İndir (JSON)</button>
+            <button class="btn-text danger" onclick="MindForge.resetData()">Verileri Sıfırla</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- GÖRÜNÜM 2: OYUN ARENASI (DİNAMİK) -->
+      <section id="view-game" class="view">
+        <div class="game-top-bar">
+          <button class="btn-back" onclick="MindForge.quitToMenu()">
+            ← Menüye Dön
+          </button>
+          <div class="game-title-wrap">
+            <h3 id="current-game-title">Oyun Başlığı</h3>
+            <span id="current-game-subtitle">Kısa Talimat</span>
+          </div>
+          <div class="game-session-stats">
+            <div class="session-stat">
+              <span class="label">Puan:</span>
+              <strong id="game-live-score">0</strong>
+            </div>
+            <div class="session-stat" id="timer-stat-wrap">
+              <span class="label" id="timer-stat-label">Süre:</span>
+              <strong id="game-live-timer">30s</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oyun Alanı Konteyneri -->
+        <div id="game-stage" class="game-stage">
+          <!-- Aktif oyun modülü tarafından dinamik doldurulur -->
+        </div>
+
+        <!-- Ekran Altı İpuçları & Kontroller -->
+        <div id="game-controls-tray" class="game-controls-tray">
+          <!-- Klavye / Dokunmatik Kılavuzu -->
+        </div>
+      </section>
+
+      <!-- GÖRÜNÜM 3: OYUN SONU RAPORU (CEZALANDIRMAYAN ŞEFFAF SKOR) -->
+      <section id="view-summary" class="view">
+        <div class="summary-card">
+          <div class="summary-badge">🎉 Bilişsel Seans Tamamlandı</div>
+          <h2 id="summary-game-name">Oyun Adı</h2>
+          <p class="summary-subtitle">Emeğiniz kaydedildi, asla puan kaybetmezsiniz.</p>
+
+          <div class="summary-score-big">
+            <span class="score-label">Kazanılan Tecrübe</span>
+            <div class="score-value">+<span id="summary-xp-gained">250</span> XP</div>
+          </div>
+
+          <div class="summary-metrics-grid">
+            <div class="metric-box">
+              <span class="m-icon">🎯</span>
+              <span class="m-label">Doğruluk</span>
+              <strong id="summary-accuracy">100%</strong>
+            </div>
+            <div class="metric-box">
+              <span class="m-icon">⚡</span>
+              <span class="m-label">Ort. Tepki Süresi</span>
+              <strong id="summary-reaction">450 ms</strong>
+            </div>
+            <div class="metric-box">
+              <span class="m-icon">🏆</span>
+              <span class="m-label">Aşama / Zorluk</span>
+              <strong id="summary-difficulty">Aşama 5</strong>
+            </div>
+            <div class="metric-box">
+              <span class="m-icon">🧠</span>
+              <span class="m-label">Zihinsel Durum</span>
+              <strong class="green-text" id="summary-state">Zinde & Odaklı</strong>
+            </div>
+          </div>
+
+          <div class="summary-advice-box">
+            <span class="advice-icon">💡</span>
+            <p id="summary-advice">Tebrikler! Bilişsel antrenman nöronlar arasındaki sinaptik plastisiteyi pekiştirir.</p>
+          </div>
+
+          <div class="summary-actions">
+            <button class="btn btn-secondary" onclick="MindForge.replayCurrentGame()">
+              Tekrar Oyna ↺
+            </button>
+            <button class="btn btn-primary" onclick="MindForge.showDashboard()">
+              Ana Menüye Dön ➜
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mini-Tutorial / Sandbox Modalı -->
+    <div id="tutorial-modal" class="modal-backdrop">
+      <div class="modal-box">
+        <div class="modal-header">
+          <span class="tut-badge">Nasıl Oynanır?</span>
+          <h3 id="tut-title">Oyun Başlığı</h3>
+        </div>
+        <div class="modal-body" id="tut-body">
+          <!-- Dinamik tutorial içeriği -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-block" onclick="MindForge.closeTutorialAndStart()">
+            Anladım, Doğrudan Başla! 🚀
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modüler Oyun Kütüphanesi & Çekirdek Motor -->
+  <script src="games-registry.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
